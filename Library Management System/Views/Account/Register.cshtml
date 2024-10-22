@@ -1,0 +1,152 @@
+@{
+    ViewData["Title"] = "Register";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <style>
+        body {
+            background-color: beige; /* Pure beige background */
+        }
+        .registration-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .registration-form {
+            width: 400px;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px navy;
+            background-color: #d3d3d3; /* Light grey */
+        }
+        label, .text-center span, .text-center a {
+            color: navy; /* Navy color for all texts */
+        }
+        .form-group {
+            margin-bottom: 20px; /* Increased spacing between fields */
+        }
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 10px;
+            background-color: beige; /* Beige background for input fields */
+            border: 2px solid beige; /* Navy border */
+            border-radius: 5px;
+            color: navy;
+        }
+        .form-group input:focus, .form-group select:focus {
+            border-color: navy; /* Navy border when focused */
+            outline: none; /* Remove default outline */
+        }
+        .btn {
+            background: linear-gradient(135deg, navy, #d3d3d3, #f5f5dc); /* Gradient button */
+            color: white;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+        }
+        .btn:hover {
+            background: linear-gradient(135deg, #003366, #a9a9a9, #e5e5b3); /* Darker on hover */
+        }
+        .text-center {
+            text-align: center;
+            color: navy;
+            margin-top: 15px;
+        }
+        h2{
+            text-align: center;
+            color: navy; /* Navy text color */
+            margin-top: 15px;
+            text-shadow: 2px 2px 4px beige;
+        }
+
+    </style>
+</head>
+<body>
+<header>
+    <nav class="navbar navbar-expand-lg" style="background-color: navy; padding: 10px;">
+        <div class="container-fluid" style="font-size: 1.5rem; color : beige;">
+                📚 Our Library
+        </div>
+    </nav>
+</header>
+<!--<div id="drawer" class="drawer">
+    <ul>
+        <li><a href="#home">Home</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#services">Services</a></li>
+        <li><a href="#contact">Contact</a></li>
+    </ul>
+</div>-->
+
+    <div class="registration-container" style="margin: 200px;">
+        <div class="registration-form">
+            <h2>Register</h2>
+            <form asp-action="Register" method="post">
+                <div class="form-group">
+                    <label for="Name">Name</label>
+                    <input type="text" id="Name" name="Name" required />
+                </div>
+                <div class="form-group">
+                    <label for="BirthDate">Birth Date</label>
+                    <input type="date" id="BirthDate" name="BirthDate" required />
+                </div>
+                <div class="form-group">
+                    <label for="Gender">Gender</label>
+                    <select id="Gender" name="Gender" required>
+                        <option value="" disabled selected>Select Gender</option>
+                        <option value="Male">Male</option>
+                        <option value="Female">Female</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="Email">Email</label>
+                    <input type="email" id="Email" name="Email" required />
+                </div>
+                <div class="form-group">
+                    <label for="Password">Password (Max 8 characters)</label>
+                    <input type="password" id="Password" name="Password" required maxlength="8" />
+                </div>
+                <div class="form-group">
+                    <label for="ConfirmPassword">Confirm Password</label>
+                    <input type="password" id="ConfirmPassword" name="ConfirmPassword" required maxlength="8" />
+                </div>
+
+                <div class="form-group">
+                    <label for="Phone">Phone</label>
+                    <input type="tel" id="Phone" name="Phone" required />
+                </div>
+                <div class="form-group">
+                    <label for="Role">Role</label>
+                    <select id="Role" name="Role" required>
+                        <option value="" disabled selected>Select Role</option>
+                        <option value="Member">Member</option>
+                        <option value="Librarian">Librarian</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="Address">Address</label>
+                    <input type="text" id="Address" name="Address" required />
+                </div>
+                <button type="submit" class="btn" >Register</button>
+                <div class="text-center">
+                    <span>Already have an account? </span>
+                    <a href="/Account/Login">Log in here</a>
+                </div>
+            </form>
+        </div>
+    </div>
+<script>
+
+
+
+</Script>
+
+</body>
+</html>

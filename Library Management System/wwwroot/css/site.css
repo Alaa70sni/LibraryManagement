@@ -1,0 +1,272 @@
+/* General styles */
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f4f4f4;
+}
+
+header {
+  background-color: navy;
+  color: beige;
+  padding: 10px;
+  text-align: center;
+  box-shadow: 0 2px 5px rgba(211, 211, 211, 0.5); /* Light grey shadow */
+
+  
+}
+
+.container {
+  display: flex;
+}
+
+
+
+@media (max-width: 100px) {
+  .container {
+      flex-direction: column;
+
+  }
+
+  nav {
+      width: 100%;
+  }
+}
+
+
+/* Navigation styles */
+nav
+{
+  background-color: navy;
+
+}
+
+nav ul {
+  list-style: none;
+  padding: 0;
+}
+
+nav ul li {
+  margin: 10px 0;
+}
+
+nav a {
+  color: beige;
+  text-decoration: none;
+}
+
+.navbar {
+  background-color: navy;
+  display: flex; justify-content: space-between; align-items: center;
+}
+
+.navbar-nav .nav-link {
+  color: beige;
+}
+.navbar-nav .nav-link:hover {
+  color: #ccc;
+}
+
+
+.navbar h1 { margin: 0; }
+
+/* Main content styles */
+body {
+  font-family: Arial, sans-serif;
+  background-color: gray;
+}
+main {
+  flex: 1; 
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th, td {
+  padding: 10px;
+  border: 1px solid #ddd;
+}
+
+th {
+  background-color: #f2f2f2;
+}
+
+
+
+.drawer {
+  height: 100%; /* Auto height */
+  width: 250px; /* Width of the drawer */
+  position: absolute;
+  top: 80px; /* Adjust this to place it under the header */
+  right: -250px; /* Hidden by default on the right */
+  background-color: navy;
+  overflow-x: hidden;
+  transition: transform 0.3s; /* Smooth transition */
+  padding-top: 20px;
+  z-index: 1000; /* Make sure it's above other content */
+  display: none;
+}
+.drawer.open {
+  transform: translateX(-250px); /* Move the drawer into view */
+  display: block;
+}
+.drawer ul {
+  list-style-type: none; /* Remove default bullets */
+  padding: 0; /* Remove default padding */
+}
+
+.drawer li {
+  padding: 8px 15px; /* Space between items */
+}
+
+.drawer a {
+  color: beige;
+  text-decoration: none; /* Remove underline */
+  display: block; /* Full width clickable area */
+  transition: background 0.3s; /* Smooth background transition */
+}
+
+.drawer a:hover {
+  background-color: rgba(255, 255, 255, 0.2); /* Background change on hover */
+}
+
+.open-btn {
+  font-size: 20px;
+  background-color: navy;
+  color: beige;
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+}
+
+
+
+
+
+.filter-drawer {
+  height: auto; /* Auto height */
+  width: 250px; /* Width of the filter drawer */
+  position: absolute;
+  top: 40px; /* Adjust to position below the button */
+  right: -500px; /* Hidden by default on the right */
+  background-color: rgb(149, 136, 104);
+  border: 1px solid navy;
+  border-radius: 5px;
+  transition: transform 0.3s; /* Smooth transition */
+  z-index: 1000; /* Ensure it's above other content */
+  display: none; /* Initially hidden */
+}
+
+.filter-drawer.open {
+  transform: translateX(-500px); 
+  display: block;/* Move the drawer into view */
+}
+
+.filter-drawer div {
+  margin-bottom: 10px; /* Space between sections */
+}
+
+.filter-drawer div strong {
+  display: inline-block;
+  margin-bottom: 5px;
+}
+
+
+
+/* about us */
+
+@media (max-width: 768px) {
+  .text-blk.heading {
+    font-size: 55px;
+    line-height: 65px;
+  }
+
+  .text-blk.subHeading {
+    font-size: 18px;
+    line-height: 24px;
+  }
+
+  .socialIcon {
+    width: 20px;
+    height: 20px;
+  }
+
+  .text-blk.subHeading {
+    line-height: 27px;
+  }
+
+  .text-blk.heading {
+    font-size: 32px;
+    line-height: 40px;
+    margin-top: 0px;
+    margin-right: 0px;
+    margin-bottom: 20px;
+    margin-left: 0px;
+  }
+
+  .social-icon {
+    margin: 0 25px 0 25px;
+  }
+}
+
+@media (max-width: 500px) {
+  .responsive-container-block.bigContainer {
+    padding-top: 10px;
+    padding-right: 20px;
+    padding-bottom: 10px;
+    padding-left: 20px;
+  }
+
+  .text-blk.heading {
+    font-size: 45px;
+    line-height: 55px;
+    margin-top: 0px;
+    margin-right: 0px;
+    margin-bottom: 20px;
+    margin-left: 0px;
+  }
+
+  .text-blk.subHeading {
+    font-size: 14px;
+    line-height: 22px;
+    margin-top: 0px;
+    margin-right: 0px;
+    margin-bottom: 30px;
+    margin-left: 0px;
+  }
+
+  .social-icons-container {
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .text-blk.subHeading {
+    font-size: 16px;
+    line-height: 23px;
+  }
+
+  .text-blk.heading {
+    font-size: 26px;
+    line-height: 30px;
+  }
+
+  .social-icon {
+    margin: 0 20px 0 20px;
+  }
+}  
+
+/* Footer styles */
+footer {
+  display: flex;
+  justify-content: space-between;
+  text-align: center;
+  padding: 10px;
+  background-color: navy;
+  color: beige;
+  position: relative;
+  bottom: 0;
+  width: 100%;
+}

@@ -1,0 +1,130 @@
+@using Library_Management_System.Models
+@using Library_Management_System.Controllers
+
+
+@model Library_Management_System.Models.CheckoutViewModel
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout</title>
+    <style>
+        body { font-family: Arial, sans-serif;background-color: beige; }
+        label{margin: 2%; color: navy; text-shadow: 2px 2px 4px lightgrey;}
+        table { width: 100%; border-collapse: collapse; }
+        th { padding: 10px; border: 1px solid lightgrey; background-color:navy;color: beige;}
+        td {padding: 10px; border: 1px solid navy;color:navy;}
+
+
+        .btn {
+            background: linear-gradient(135deg, navy, #d3d3d3, #f5f5dc); /* Gradient button */
+            color: white;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+            margin: 10%;
+        }
+        .btn:hover {
+            background: linear-gradient(135deg, #003366, #a9a9a9, #e5e5b3); /* Darker on hover */
+            color: navy;
+        }
+
+        
+        h2{
+            text-align: center;
+            color: navy; /* Navy text color */
+            margin-top: 15px;
+            text-shadow: 2px 2px 4px lightgrey;
+        }
+
+
+        #dueDate{
+            padding: 10px;
+            background-color: beige; /* Beige background for input fields */
+            border: 2px solid navy; /* Navy border */
+            border-radius: 5px;
+            color: navy;
+        }
+        #dueDate:focus{
+            border-color: beige; /* Navy border when focused */
+            outline: none; /* Remove default outline */
+            }
+
+
+
+    </style>
+</head>
+<header>
+    <nav style="display: flex; justify-content: space-between; align-items: center; padding: 10px;">
+        <div style="font-size: 1.5rem; color: beige;">📚 Our Library </div>
+        <button id="toggleBtn" class="open-btn">☰ </button>
+    </nav>
+</header>
+        <div id="drawer" class="drawer">
+    <ul>
+        <li><a href="@Url.Action("BookPage", "Books")">🏠 Home</a></li>
+        <li><a href="@Url.Action("Login", "Account")">🚪 Logout</a></li>
+    </ul>
+</div>
+
+<body>
+
+<!-- Model.User.Role == "Member" && 
+if (Model.User.Role == "Member") -->
+
+@if (Model.Checkouts.Any())
+{
+    <h2>Your Checkout List</h2>
+        <table id="listViewContainer" style="margin: 2%; border-collapse: collapse; box-shadow: 0 4px 8px navy; background-color: #d3d3d3;">
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Author</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var checkout in Model.Checkouts)
+            {
+                <tr>
+                    <td>@checkout.Book.Title</td>
+                    <td>@checkout.Book.Author</td>
+                    <td></td> <!-- display remove action-->
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else 
+{
+    <p>No books checked out.</p>
+}
+
+
+
+
+<!-- Due Date Input -->
+<h2>Set Due Date</h2>
+<form asp-action="SubmitCheckout" method="post">
+    <div style=" display: flex; justify-content: center; align-items: center; ">
+    <label for="dueDate"><strong>Due Date : </strong></label>
+    <input type="date" id="dueDate" name="DueDate" value="@Model.DueDate.ToString("yyyy-MM-dd")" required />
+    </div>
+
+       @if (!Model.IsSubmitted) // Only show button if not submitted
+    {
+        <button type="submit" class = "btn">Submit</button>
+    }
+    else
+    {
+        <p>Submission completed. Thank you!</p>
+    }
+</form>
+
+</body>
+</html>

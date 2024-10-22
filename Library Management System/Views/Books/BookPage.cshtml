@@ -1,0 +1,268 @@
+@using Library_Management_System.Models
+@using Library_Management_System.Controllers
+
+
+@model IEnumerable<Library_Management_System.Models.Book>
+
+@{
+    ViewData["Title"] = "Books";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewData["Title"]</title>
+    <style>
+        body { font-family: Arial, sans-serif;background-color: beige; }
+        .filter-menu { position: absolute; background-color: white; }
+        .footer { background-color: #4588ca; padding: 10px; text-align: center; }
+        .book-item { border: 1px solid #9f967e; margin: 10px; padding: 10px; width: calc(25% - 20px); }
+        table { width: 100%; border-collapse: collapse; }
+        th { padding: 10px; border: 1px solid lightgrey; background-color:navy;color: beige;}
+        td {padding: 10px; border: 1px solid navy;color:navy;}
+        #searchInput{
+            padding: 10px;
+            background-color: beige; /* Beige background for input fields */
+            border: 2px solid beige; /* Navy border */
+            border-radius: 5px;
+            color: navy;
+        }
+        #searchInput:focus{
+            border-color: navy; /* Navy border when focused */
+            outline: none; /* Remove default outline */
+            }
+        #cardView{
+            background: linear-gradient(135deg, navy, #d3d3d3, #f5f5dc); /* Gradient button */
+            color: white;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+
+        }
+        #cardView:hover{
+              background: linear-gradient(135deg, #003366, #a9a9a9, #e5e5b3); /* Darker on hover */
+        }
+
+        #listView{
+
+            background: linear-gradient(135deg, navy, #d3d3d3, #f5f5dc); /* Gradient button */
+            color: white;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+
+        }
+        #listView:hover{
+              background: linear-gradient(135deg, #003366, #a9a9a9, #e5e5b3); /* Darker on hover */
+
+        }
+
+        .btn {
+            background: linear-gradient(135deg, navy, #d3d3d3, #f5f5dc); /* Gradient button */
+            color: white;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+        }
+        .btn:hover {
+            background: linear-gradient(135deg, #003366, #a9a9a9, #e5e5b3); /* Darker on hover */
+        }
+
+        h2{
+            text-align: center;
+            color: navy; /* Navy text color */
+            margin-top: 15px;
+            text-shadow: 2px 2px 4px lightgrey;
+        }
+    </style>
+</head>
+<body>
+
+<!-- Header -->
+<header>
+    <nav style="display: flex; justify-content: space-between; align-items: center; padding: 10px;">
+        <div style="font-size: 1.5rem; color: beige;">📚 Our Library </div>
+        <div style="flex: 1; text-align: center;">
+            <input type="text" id="searchInput" placeholder="Search..." onkeyup="searchBooks()"/>
+        </div>
+        <button id="toggleBtn" class="open-btn">☰ </button>
+    </nav>
+</header>
+
+<div id="drawer" class="drawer">
+    <ul>
+        <li><a href="@Url.Action("MemberCheckout", "Checkout")">🛒Checkout</a></li>
+        <li><a href="@Url.Action("Profile", "Account")">👥Profile</a></li>
+        <li><a href="@Url.Action("Login", "Account")">🚪 Logout</a></li>
+        <li><button onclick="toggleFilterMenu()" style="padding: 5px; background-color: navy; color:beige;">Filter</button></li>
+    </ul>
+</div>
+
+<div id="filterMenu" class="filter-drawer">
+    <ul>
+    <li>
+        
+        <div onclick="toggleSortOptions(event)" style="cursor: pointer;"><strong>Sort by</strong></div>
+        <div id="sortOptions" style="display: none; cursor: pointer; padding-left: 10px;position: absolute; background-color: navy;">
+                   <ul>
+            <li onclick="sortBooks('asc')">Ascending</li>
+            <li onclick="sortBooks('desc')">Descending</li>
+            </ul>
+        </div>
+        
+    </li>
+    <li>
+                <div onclick="toggleGenreOptions(event)" style="cursor: pointer;"><strong>Genre</strong></div>
+                    <div id="genreOptions" style="display: none; cursor: pointer; position: absolute; background-color: rgb(149, 136, 104);">
+                    @foreach (var genre in Model.Select(b => b.Genre).Distinct())
+                    {
+                        <div onclick="applyGenre('@genre');">@genre</div>
+                    }
+            </div>
+            </li>
+            <li>
+            <div onclick="toggleAuthorOptions(event)" style="cursor: pointer;"><strong>Author</strong></div>
+            <div id="authorOptions" style="display: none; cursor: pointer; position: absolute; background-color: rgb(149, 136, 104); ">
+                    @foreach (var author in Model.Select(b => b.Author).Distinct())
+                    {
+                        <div onclick="applyAuthor('@author');">@author</div>
+                    }
+            </div>
+        </li>
+</ul>
+</div>
+
+<!-- Main Content -->
+<div style="padding: 20px;">
+    <h2><strong>All Books</strong></h2>
+    <div>
+        <!-- Toggle View -->
+        <button id="cardView" onclick="toggleView('card')">Card View</button>
+        <button id="listView"onclick="toggleView('list')">List View</button>
+    </div>
+    
+    <div id="bookContainer" style="display: flex; flex-direction: row; flex-wrap: wrap;">
+        <!-- Card View -->
+        <div id="cardViewContainer" style="display: flex; border-radius: 10px; flex-wrap: wrap; width: 100%; box-shadow: 0 4px 8px navy; background-color: #d3d3d3;">
+
+            @foreach (var book in Model)
+            {
+                <div class="book-item" style="border: 1px solid navy; margin: 10px; padding: 10px; width: calc(25% - 20px); color : navy;">
+                    <h3>@book.Title</h3>
+                    <p>Author: @book.Author</p>
+                    <p>Genre: @book.Genre</p>
+                    <p>Available Copies: @book.AvailableCopies</p>
+                    <p>Total Copies: @book.TotalCopies</p>
+                      <form asp-action="Add" asp-controller="Checkout" method="post">
+                            <input type="hidden" name="BookId" value="@book.Id" />
+                            <input type="hidden" name="MemberId" value="@ViewBag.MemberId" /> <!-- Assuming you store member ID in ViewBag -->
+                            <button class = "btn" type="submit" @(book.AvailableCopies == 0 ? "disabled" : "")>
+                                Add to Checkout
+                            </button>
+                        </form>
+
+                </div>
+            }
+        </div>
+        
+        <!-- List View -->
+        <table id="listViewContainer" style="display: none; width: 100%; border-collapse: collapse; box-shadow: 0 4px 8px navy; background-color: #d3d3d3;">
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Author</th>
+                    <th>Genre</th>
+                    <th>Available Copies</th>
+                    <th>Total Copies</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var book in Model)
+                {
+                    <tr>
+                        <td>@book.Title</td>
+                        <td>@book.Author</td>
+                        <td>@book.Genre</td>
+                        <td>@book.AvailableCopies</td>
+                        <td>@book.TotalCopies</td>
+                        <td>
+                               <form asp-action="Add" asp-controller="Checkout" method="post" style="display:inline;">
+                                    <input type="hidden" name="BookId" value="@book.Id" />
+                                    <input type="hidden" name="MemberId" value="@ViewBag.MemberId" />
+                                    <button class="btn" type="submit" @(book.AvailableCopies == 0 ? "disabled" : "")>
+                                        Add to Checkout
+                                    </button>
+                                </form>
+
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+<script src="~/js/site.js"></script>
+
+</body>
+</html>
+<!--
+    atif (User.IsInRole("Member"))
+    {
+        <form asp-action="Add" asp-controller="Checkout" method="post" style="display:inline;">
+            <input type="hidden" name="BookId" value="atbook.Id" />
+            <input type="hidden" name="MemberId" value="atViewBag.MemberId" />
+            <button type="submit" at(book.AvailableCopies == 0 ? "disabled" : "")>
+                Add to Checkout
+            </button>
+        </form>
+    }
+    else if (User.IsInRole("Librarian"))
+    {
+        <a href="/Books/Edit/atbook.Id">Edit</a> 
+        <a href="/Books/Delete/atbook.Id">Delete</a>
+    }
+               
+               
+               
+            
+
+
+
+                    atif (User.IsInRole("Member"))
+    {
+        <form asp-action="Add" asp-controller="Checkout" method="post">
+            <input type="hidden" name="BookId" value="atbook.Id" />
+            <input type="hidden" name="MemberId" value="atViewBag.MemberId" /> 
+            <button type="submit" at(book.AvailableCopies == 0 ? "disabled" : "")>
+                Add to Checkout
+            </button>
+        </form>
+    }
+    else if (User.IsInRole("Librarian"))
+    {
+        <a href="/Books/Edit/atbook.Id">Edit</a> 
+        <a href="/Books/Delete/atbook.Id">Delete</a>
+    } 
+
+
+
+               
+               
+               
+               
+                            -->
+
+
+
+

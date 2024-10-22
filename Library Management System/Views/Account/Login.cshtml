@@ -1,0 +1,95 @@
+@model LoginViewModel
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #f5f5dc; /* Pure beige background */
+        }
+        .login-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .login-form {
+            width: 400px;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px navy;
+            background-color: #d3d3d3; /* Light grey */
+        }
+
+        .text-center{
+            color: navy; /* Navy text */
+        }
+        .text-white {
+            color: navy; /* Navy text */
+        }
+        .btn-primary {
+            width: 100%;
+            background: linear-gradient(135deg, navy, #d3d3d3, #f5f5dc); /* Gradient button */
+            border: none; /* Remove border */
+        }
+        .btn-primary:hover {
+            background: linear-gradient(135deg, #003366, #a9a9a9, #e5e5b3); /* Darker on hover */
+        }
+        label, .text-center span, .text-center a {
+            color: navy; /* Navy color for all texts */
+        }
+        h2{
+            text-align: center;
+            color: navy; /* Navy text color */
+            text-shadow: 2px 2px 4px beige;
+        }
+    </style>
+</head>
+<body>
+<header>
+    <nav class="navbar navbar-expand-lg" style="background-color: navy; padding: 10px;">
+        <div class="container-fluid" style="font-size: 1.5rem; color : beige;">
+                📚 Our Library
+        </div>
+    </nav>
+</header>
+
+
+
+    <div class="login-container">
+        <div class="login-form">
+            <h2>Welcome !</h2>
+            <form asp-action="Login" method="post">
+                <div class="form-group">
+                    <label for="Email">Email</label>
+                    <input type="email" class="form-control" id="Email" name="Email" required />
+                </div>
+                <div class="form-group">
+                    <label for="Password">Password</label>
+                    <input type="password" class="form-control" id="Password" name="Password" required />
+                </div>
+                <div class="form-group form-check">
+                    <label class="form-check-label">
+                        <input class="form-check-input" asp-for="RememberMe"/>Remember Me
+                        </label>
+                </div>
+                <button type="submit" class="btn btn-primary">Log In</button>
+                <div class="text-center mt-2">
+                    <span>Don't have an account? </span>
+                    <a href="/Account/Register">Register here</a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+
+ <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-3.5.1.min.js"></script>
+<script src="https://ajax.aspnetcdn.com/ajax/jquery.validation/1.19.2/jquery.validate.min.js"></script>
+<script src="https://ajax.aspnetcdn.com/ajax/jquery.validation.unobtrusive/3.2.11/jquery.validate.unobtrusive.min.js"></script>
+
+
+</body>
+</html>
