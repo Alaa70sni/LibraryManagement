@@ -16,5 +16,19 @@ public class BorrowedBook
 
     // Navigation properties
     public virtual User User { get; set; }
-    public virtual Book Book { get; set; }
+    public  Book Book { get; set; }
+
+
+
+      public decimal CalculatePenalty(decimal penaltyRate)
+    {
+        if (!ReturnedDate.HasValue || ReturnedDate <= DueDate)
+        {
+            return 0; // No penalty if not overdue or not returned
+        }
+
+        int overdueDays = (ReturnedDate.Value - DueDate).Days;
+        return overdueDays * penaltyRate;
+    }
+    
 }

@@ -19,24 +19,56 @@ function toggleFilterMenu() {
 
 function toggleSortOptions(event) {
     event.stopPropagation(); // Prevent closing the filter menu
-    const options = document.getElementById('sortOptions');
-    options.style.display = options.style.display === 'none' ? 'block' : 'none';
+    const sortOptions = document.getElementById('sortOptions');
+    if (sortOptions.classList.contains('open')) {
+        sortOptions.classList.remove('open');
+        setTimeout(() => {
+            sortOptions.style.display = 'none'; // Hide after transition
+        }, 300); // Match the duration of the CSS transition
+    } else {
+        sortOptions.style.display = 'block'; // Show the drawer
+        setTimeout(() => {
+            sortOptions.classList.add('open'); // Slide in after display
+        }, 10); // Small delay to ensure display is set
+    }
     hideOtherOptions('sortOptions');
 }
 
 
 function toggleGenreOptions(event) {
     event.stopPropagation();
-    const options = document.getElementById('genreOptions');
-    options.style.display = options.style.display === 'none' ? 'block' : 'none';
+    const genreOptions = document.getElementById('genreOptions');
+    if (genreOptions.classList.contains('open')) {
+        genreOptions.classList.remove('open');
+        setTimeout(() => {
+        genreOptions.style.display = 'none'; // Hide after transition
+        }, 300); // Match the duration of the CSS transition
+    } else {
+        genreOptions.style.display = 'block'; // Show the drawer
+        setTimeout(() => {
+        genreOptions.classList.add('open'); // Slide in after display
+        }, 10); // Small delay to ensure display is set
+    }
+
     hideOtherOptions('genreOptions');
 }
 
 
 function toggleAuthorOptions(event) {
     event.stopPropagation();
-    const options = document.getElementById('authorOptions');
-    options.style.display = options.style.display === 'none' ? 'block' : 'none';
+    const authorOptions = document.getElementById('authorOptions');
+    if (authorOptions.classList.contains('open')) {
+        authorOptions.classList.remove('open');
+        setTimeout(() => {
+        authorOptions.style.display = 'none'; // Hide after transition
+        }, 300); // Match the duration of the CSS transition
+    } else {
+        authorOptions.style.display = 'block'; // Show the drawer
+        setTimeout(() => {
+        authorOptions.classList.add('open'); // Slide in after display
+        }, 10); // Small delay to ensure display is set
+    }
+
     hideOtherOptions('authorOptions');
 }
 
@@ -299,4 +331,32 @@ toggleBtn.onclick = function() {
             drawer.classList.add('open'); // Slide in after display
         }, 10); // Small delay to ensure display is set
     }
+    hideOtherOptions();
+    document.getElementById('filterMenu').style.display = 'none';
+
+}
+
+
+
+function openModal(bookId, bookTitle) {
+    document.getElementById("deleteModal").style.display = "block";
+    document.getElementById("modalMessage").innerText = `Are you sure you want to delete "${bookTitle}"?`;
+    document.getElementById("bookId").value = bookId;
+}
+
+function closeModal() {
+    document.getElementById("deleteModal").style.display = "none";
+}
+
+// To close the modal when the user clicks anywhere outside of it
+window.onclick = function(event) {
+    const modal = document.getElementById("deleteModal");
+    if (event.target === modal) {
+        modal.style.display = "none";
+    }
+}
+
+// Confirm deletion function
+function confirmDelete() {
+    document.getElementById("deleteForm").submit();
 }

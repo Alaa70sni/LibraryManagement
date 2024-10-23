@@ -8882,19 +8882,24 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\elmohandes\\.nuget\\packages\\": {}
+    "C:\\Users\\hader\\.nuget\\packages\\": {},
+    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\depi\\Library System\\Library Management System\\Library Management System.csproj",
+      "projectUniqueName": "E:\\Library System\\Library Management System\\Library Management System.csproj",
       "projectName": "Library Management System",
-      "projectPath": "D:\\depi\\Library System\\Library Management System\\Library Management System.csproj",
-      "packagesPath": "C:\\Users\\elmohandes\\.nuget\\packages\\",
-      "outputPath": "D:\\depi\\Library System\\Library Management System\\obj\\",
+      "projectPath": "E:\\Library System\\Library Management System\\Library Management System.csproj",
+      "packagesPath": "C:\\Users\\hader\\.nuget\\packages\\",
+      "outputPath": "E:\\Library System\\Library Management System\\obj\\",
       "projectStyle": "PackageReference",
+      "fallbackFolders": [
+        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+      ],
       "configFilePaths": [
-        "C:\\Users\\elmohandes\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\hader\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -8980,7 +8985,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.302/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.403/PortableRuntimeIdentifierGraph.json"
       }
     }
   }

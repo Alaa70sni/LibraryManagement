@@ -18,10 +18,32 @@ public class BooksController : Controller
         _context = context;
     }
 
+
+
+    private string GetCurrentUserId()
+    {
+        return HttpContext.Session.GetString("UserId");
+    }
+
+    private string GetCurrentUserRole()
+    {
+        return HttpContext.Session.GetString("UserRole");
+    }
+
+
+    private int GetCurrentMemberId()
+    {
+        var userEmail = HttpContext.Session.GetString("UserEmail");
+        var user = _context.Users.FirstOrDefault(u => u.Email == userEmail);
+        return user?.Id ?? 0;
+    }
+
     public IActionResult BookPage()
     {
         var books = _context.Books.ToList();
-        var memberId = GetCurrentMemberId(); // New method to get the member ID
+        var memberId = GetCurrentMemberId();
+        var userRole = GetCurrentUserRole(); // Get the current user role
+            ViewBag.UserRole = userRole; // Set UserRole in ViewBag // New method to get the member ID
 
 
         var viewModel = new BookPageViewModel
@@ -33,101 +55,143 @@ public class BooksController : Controller
         return View(books);
     }
 
-    private int GetCurrentMemberId()
+[HttpGet]
+public IActionResult Create()
 {
-     var userEmail = HttpContext.Session.GetString("UserEmail");
-    var user = _context.Users.FirstOrDefault(u => u.Email == userEmail);
-    return user?.Id ?? 0; 
+    return View();
+}
+
+[HttpPost]
+[ValidateAntiForgeryToken]
+public IActionResult Create(Book newBook)
+{
+    if (newBook == null)
+    {
+        ModelState.AddModelError("", "Invalid data.");
+        return View(newBook);
+    }
+
+    if (ModelState.IsValid)
+    {
+        // Check if the book already exists (optional)
+        var existingBook = _context.Books
+            .FirstOrDefault(b => b.Title == newBook.Title && b.Author == newBook.Author);
+        if (existingBook != null)
+        {
+            ModelState.AddModelError("", "This book already exists.");
+            return View(newBook);
+        }
+
+        // Add new book to the context
+        _context.Books.Add(newBook);
+        _context.SaveChanges(); // Save changes synchronously
+
+        return RedirectToAction("BookPage"); // Redirect to the list of books after creating
+    }
+
+    // Return the view with the model if validation fails
+    return View(newBook);
+}
+
+// GET: Books/Edit
+[HttpGet]
+public IActionResult Edit(int id)
+{
+    var book = _context.Books.Find(id);
+    if (book == null)
+    {
+        return NotFound();
+    }
+
+    var editBookViewModel = new EditBookViewModel
+    {
+        Id = book.Id,
+        Title = book.Title,
+        Author = book.Author,
+        Genre = book.Genre,
+        AvailableCopies = book.AvailableCopies,
+        TotalCopies = book.TotalCopies
+    };
+
+    return View("EditBook", editBookViewModel); // Use the correct view name
+}
+
+
+    // POST: Books/Edit/5
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+public async Task<IActionResult> Edit(EditBookViewModel model)
+{
+    if (ModelState.IsValid)
+    {
+        var book = await _context.Books.FindAsync(model.Id);
+        if (book == null)
+        {
+            return NotFound();
+        }
+
+        book.Title = model.Title;
+        book.Author = model.Author;
+        book.Genre = model.Genre;
+        book.AvailableCopies = model.AvailableCopies;
+        book.TotalCopies = model.TotalCopies;
+
+        await _context.SaveChangesAsync();
+
+        return RedirectToAction("BookPage"); // Redirect after successful edit
+    }
+
+    return View("EditBook", model); // Return the view with the model if validation fails
+}
+
+public async Task<IActionResult> Delete(int id)
+{
+    var book = await _context.Books
+        .Include(b => b.Checkouts)
+        .Include(b => b.BorrowedBooks)
+        .FirstOrDefaultAsync(b => b.Id == id);
+
+    if (book == null)
+    {
+        return NotFound();
+    }
+
+    return PartialView("_DeleteModal", book); // Ensure this partial view exists
+}
+
+
+public async Task<IActionResult> DeleteConfirmed(int id)
+{
+    var book = await _context.Books
+        .Include(b => b.Checkouts) // Include related Checkouts
+        .Include(b => b.BorrowedBooks) // Include related BorrowedBooks
+        .FirstOrDefaultAsync(b => b.Id == id);
+        
+    if (book == null)
+    {
+        return NotFound();
+    }
+
+    // Check for related records
+    if (book.Checkouts.Any() || book.BorrowedBooks.Any())
+    {
+        TempData["ErrorMessage"] = "Cannot delete this book as it is currently checked out or borrowed.";
+        return RedirectToAction(nameof(BookPage)); // Redirect back to the book page or index
+    }
+
+    // If no related records, proceed to delete
+    _context.Books.Remove(book);
+    await _context.SaveChangesAsync();
+    TempData["SuccessMessage"] = "Book deleted successfully!";
+
+    return RedirectToAction(nameof(BookPage)); // Redirect back to the book page or index
 }
 
 
 
-    public IActionResult Create()
-    {
-        return View();
-    }
-
-    [HttpPost]
-    public IActionResult Create(Book book)
-    {
-        if (ModelState.IsValid)
-        {
-            _context.Books.Add(book);
-            _context.SaveChanges();
-            return RedirectToAction(nameof(BookPage));
-        }
-        return View(book);
-    }
-
-        // GET: Books/Edit/5
-    public async Task<IActionResult> Edit(int id)
-    {
-        var book = await _context.Books.FindAsync(id);
-        if (book == null)
-        {
-            return NotFound();
-        }
-        return View(book);
-    }
-
-        // POST: Books/Edit/5
-    [HttpPost]
-    [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Edit(int id, Book book)
-    {
-        if (id != book.Id)
-        {
-            return NotFound();
-        }
-
-        if (ModelState.IsValid)
-        {
-            try
-            {
-                _context.Update(book);
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!BookExists(book.Id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-            return RedirectToAction(nameof(Index));
-        }
-        return View(book);
-    }
-
-    // GET: Books/Delete/5
-    public async Task<IActionResult> Delete(int id)
-    {
-        var book = await _context.Books.FindAsync(id);
-        if (book == null)
-        {
-            return NotFound();
-        }
-        return View(book);
-    }
-
-    // POST: Books/Delete/5
-    [HttpPost, ActionName("Delete")]
-    [ValidateAntiForgeryToken]
-    public async Task<IActionResult> DeleteConfirmed(int id)
-    {
-        var book = await _context.Books.FindAsync(id);
-        _context.Books.Remove(book);
-        await _context.SaveChangesAsync();
-        return RedirectToAction(nameof(Index));
-    }
-
 
     
-    private bool BookExists(int id)
+private bool BookExists(int id)
     {
         return _context.Books.Any(e => e.Id == id);
     }
@@ -156,8 +220,13 @@ public async Task<IActionResult> Search(string searchString)
 }
 
 
-    public IActionResult About()
+public IActionResult About()
     {
         return View();
     }
+
+
+
+
+
 }

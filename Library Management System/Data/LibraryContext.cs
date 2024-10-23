@@ -24,6 +24,34 @@ public class LibraryContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+
+
+
+        modelBuilder.Entity<Checkout>()
+            .HasOne(c => c.Member)
+            .WithMany(m => m.Checkouts) // This establishes the relationship
+            .HasForeignKey(c => c.MemberId);
+
+        modelBuilder.Entity<Checkout>()
+            .HasOne(c => c.Book)
+            .WithMany(b => b.Checkouts)
+            .HasForeignKey(c => c.BookId);
+
+
+        modelBuilder.Entity<BorrowedBook>()
+            .HasOne(b => b.Book)
+            .WithMany(b => b.BorrowedBooks)
+            .HasForeignKey(b => b.BookId)
+            .OnDelete(DeleteBehavior.Cascade);
+
+
+        modelBuilder.Entity<Checkout>()
+            .HasOne(c => c.Book)
+            .WithMany(b => b.Checkouts)
+            .HasForeignKey(c => c.BookId)
+            .OnDelete(DeleteBehavior.Cascade); // This enables cascade delete
+
+
         base.OnModelCreating(modelBuilder);
 
         modelBuilder.Entity<Book>().ToTable("Books");     

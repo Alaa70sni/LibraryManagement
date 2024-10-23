@@ -1,9 +1,7 @@
 /* General styles */
-body {
-  font-family: Arial, sans-serif;
-  margin: 0;
-  padding: 0;
-  background-color: #f4f4f4;
+body { 
+  font-family: Arial,sans-serif;
+  background-color: beige; 
 }
 
 header {
@@ -13,13 +11,12 @@ header {
   text-align: center;
   box-shadow: 0 2px 5px rgba(211, 211, 211, 0.5); /* Light grey shadow */
 
-  
 }
+
 
 .container {
   display: flex;
 }
-
 
 
 @media (max-width: 100px) {
@@ -71,10 +68,7 @@ nav a {
 .navbar h1 { margin: 0; }
 
 /* Main content styles */
-body {
-  font-family: Arial, sans-serif;
-  background-color: gray;
-}
+
 main {
   flex: 1; 
 }
@@ -99,7 +93,7 @@ th {
   height: 100%; /* Auto height */
   width: 250px; /* Width of the drawer */
   position: absolute;
-  top: 80px; /* Adjust this to place it under the header */
+  top: 10%; /* Adjust this to place it under the header */
   right: -250px; /* Hidden by default on the right */
   background-color: navy;
   overflow-x: hidden;
@@ -149,10 +143,11 @@ th {
   height: auto; /* Auto height */
   width: 250px; /* Width of the filter drawer */
   position: absolute;
-  top: 40px; /* Adjust to position below the button */
-  right: -500px; /* Hidden by default on the right */
-  background-color: rgb(149, 136, 104);
-  border: 1px solid navy;
+  top: 35%; /* Adjust to position below the button */
+  right: -250px; /* Hidden by default on the right */
+  background-color: navy;
+  overflow-x: hidden;
+  border: 1px solid lightgrey;
   border-radius: 5px;
   transition: transform 0.3s; /* Smooth transition */
   z-index: 1000; /* Ensure it's above other content */
@@ -163,6 +158,25 @@ th {
   transform: translateX(-500px); 
   display: block;/* Move the drawer into view */
 }
+.filter-drawer ul {
+  list-style-type: none; /* Remove default bullets */
+  padding: 0; /* Remove default padding */
+}
+
+.filter-drawer li {
+  padding: 8px 15px; /* Space between items */
+}
+
+.filter-drawer a {
+  color: beige;
+  text-decoration: none; /* Remove underline */
+  display: block; /* Full width clickable area */
+  transition: background 0.3s; /* Smooth background transition */
+}
+
+.filter-drawer a:hover {
+  background-color: rgba(255, 255, 255, 0.2); /* Background change on hover */
+}
 
 .filter-drawer div {
   margin-bottom: 10px; /* Space between sections */
@@ -172,6 +186,122 @@ th {
   display: inline-block;
   margin-bottom: 5px;
 }
+
+/* for sort drawer */
+
+.sortOptions-drawer {
+  height: auto; /* Auto height */
+  width: 250px; /* Width of the filter drawer */
+  position: absolute;
+  top: 35%; /* Adjust to position below the button */
+  right: -250px; /* Hidden by default on the right */
+  background-color: navy;
+  overflow-x: hidden;
+  border: 1px solid lightgrey;
+  border-radius: 5px;
+  transition: transform 0.3s; /* Smooth transition */
+  z-index: 1000; /* Ensure it's above other content */
+  display: none; /* Initially hidden */
+}
+
+.sortOptions-drawer.open {
+  transform: translateX(-750px); 
+  display: block;/* Move the drawer into view */
+}
+.sortOptions-drawer ul {
+  list-style-type: none; /* Remove default bullets */
+  padding: 0; /* Remove default padding */
+}
+
+.sortOptions-drawer li {
+  padding: 8px 15px; /* Space between items */
+  color: beige;
+  text-decoration: none; /* Remove underline */
+  display: block; /* Full width clickable area */
+  transition: background 0.3s;
+}
+
+.sortOptions-drawer li:hover {
+  background-color: rgba(255, 255, 255, 0.2); /* Background change on hover */
+}
+
+/* for Genre drawer */
+
+.genreOptions-drawer {
+  height: auto; /* Auto height */
+  width: 250px; /* Width of the filter drawer */
+  position: absolute;
+  top: 35%; /* Adjust to position below the button */
+  right: -250px; /* Hidden by default on the right */
+  background-color: navy;
+  overflow-x: hidden;
+  border: 1px solid lightgrey;
+  border-radius: 5px;
+  transition: transform 0.3s; /* Smooth transition */
+  z-index: 1000; /* Ensure it's above other content */
+  display: none; /* Initially hidden */
+}
+
+.genreOptions-drawer.open {
+  transform: translateX(-750px); 
+  display: block;/* Move the drawer into view */
+}
+.genreOptions-drawer ul {
+  list-style-type: none; /* Remove default bullets */
+  padding: 0; /* Remove default padding */
+}
+
+.genreOptions-drawer li {
+  padding: 8px 15px; /* Space between items */
+  color: beige;
+  text-decoration: none; /* Remove underline */
+  display: block; /* Full width clickable area */
+  transition: background 0.3s;
+}
+
+.genreOptions-drawer li:hover {
+  background-color: rgba(255, 255, 255, 0.2); /* Background change on hover */
+}
+
+
+/* for Author drawer */
+
+.authorOptions-drawer {
+  height: auto; /* Auto height */
+  width: 250px; /* Width of the filter drawer */
+  position: absolute;
+  top: 35%; /* Adjust to position below the button */
+  right: -250px; /* Hidden by default on the right */
+  background-color: navy;
+  overflow-x: hidden;
+  border: 1px solid lightgrey;
+  border-radius: 5px;
+  transition: transform 0.3s; /* Smooth transition */
+  z-index: 1000; /* Ensure it's above other content */
+  display: none; /* Initially hidden */
+}
+
+.authorOptions-drawer.open {
+  transform: translateX(-750px); 
+  display: block;/* Move the drawer into view */
+}
+.authorOptions-drawer ul {
+  list-style-type: none; /* Remove default bullets */
+  padding: 0; /* Remove default padding */
+}
+
+.authorOptions-drawer li {
+  padding: 8px 15px; /* Space between items */
+  color: beige;
+  text-decoration: none; /* Remove underline */
+  display: block; /* Full width clickable area */
+  transition: background 0.3s;
+}
+
+.authorOptions-drawer li:hover {
+  background-color: rgba(255, 255, 255, 0.2); /* Background change on hover */
+}
+
 
 
 

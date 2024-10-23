@@ -4,6 +4,7 @@ using Library_Management_System.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Library_Management_System.Migrations
 {
     [DbContext(typeof(LibraryContext))]
-    partial class LibraryContextModelSnapshot : ModelSnapshot
+    [Migration("20241023012515_UpdateBookModel")]
+    partial class UpdateBookModel
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -119,9 +122,6 @@ namespace Library_Management_System.Migrations
                     b.Property<int>("MemberId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("MemberId1")
-                        .HasColumnType("int");
-
                     b.Property<decimal>("PenaltyExpenses")
                         .HasColumnType("decimal(18, 2)");
 
@@ -136,8 +136,6 @@ namespace Library_Management_System.Migrations
                     b.HasIndex("BookId");
 
                     b.HasIndex("MemberId");
-
-                    b.HasIndex("MemberId1");
 
                     b.ToTable("Checkouts");
                 });
@@ -264,10 +262,6 @@ namespace Library_Management_System.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Library_Management_System.Models.Member", null)
-                        .WithMany("Checkouts")
-                        .HasForeignKey("MemberId1");
-
                     b.Navigation("Book");
 
                     b.Navigation("Member");
@@ -277,11 +271,6 @@ namespace Library_Management_System.Migrations
                 {
                     b.Navigation("BorrowedBooks");
 
-                    b.Navigation("Checkouts");
-                });
-
-            modelBuilder.Entity("Library_Management_System.Models.Member", b =>
-                {
                     b.Navigation("Checkouts");
                 });
 #pragma warning restore 612, 618

@@ -124,7 +124,7 @@
         <div id="drawer" class="drawer">
     <ul>
         <li><a href="@Url.Action("BookPage", "Books")">🏠 Home</a></li>
-                <li>
+                        <li>
             @if (Model.User.Role == "Member")
             {
                 <a href="@Url.Action("MemberCheckout", "Checkout")">🛒Checkout</a>
@@ -135,6 +135,7 @@
                 <a href="@Url.Action("LibrarianCheckout", "Checkout")">🛒Checkout</a>
             }
         </li>
+        <li><a href="@Url.Action("Profile", "Account")">👥 Profile</a></li>
         <li><a href="@Url.Action("Login", "Account")">🚪 Logout</a></li>
     </ul>
 </div>
@@ -161,23 +162,23 @@
                 </div>
             </div>
         </div>
-        <a class="edit-button" asp-action="EditProfile" asp-controller="Account" asp-route-id="@Model.User.Id")?.Value"
->Edit</a>
-
     </div>
 </div>
 
 
 <div class="table-container">
-    @if (Model.User.Role == "Member" && Model.BorrowedBooks.Any())
+    @if ( Model.BorrowedBooks.Any())
     {
         <h2>Borrowed Books</h2>
         <table id="listViewContainer" >
             <thead>
                 <tr>
                     <th>Title</th>
+                    <th>Borrowed Date</th>
                     <th>Due Date</th>
-                    <th>Action</th>
+                    <th>Returned Date</th>
+                    <th>Penalty</th>
+                
                 </tr>
             </thead>
             <tbody>
@@ -185,26 +186,16 @@
                 {
                     <tr>
                         <td><strong>@book.Book.Title</strong></td>
+                        <td>@book.BorrowedDate</td>
                         <td>@book.DueDate.ToShortDateString()</td>
-                        <td>
-                            @if (book.ReturnedDate == null)
-                            {
-                                <form method="post" action="@Url.Action("ReturnBook", "Account")" style="display:inline;">
-                                    <input type="hidden" name="borrowedBookId" value="@book.Id" />
-                                    <button type="submit" class="return-button">Return Book</button>
-                                </form>
-                            }
-                            else
-                            {
-                                <span>(Returned)</span>
-                            }
-                        </td>
+                        <td>@book.ReturnedDate</td>
+                        <td>@book.Penalty</td>
                     </tr>
                 }
             </tbody>
         </table>
     }
-    else if (Model.User.Role == "Member")
+    else
     {
         <p>No borrowed books.</p>
     }

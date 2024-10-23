@@ -9,6 +9,10 @@ public class Book
     public int AvailableCopies { get; set; }
     public int TotalCopies { get; set; }
     
+    // Add this navigation property
+    public ICollection<BorrowedBook> BorrowedBooks { get; set; }
+    public virtual ICollection<Checkout> Checkouts { get; set; }
+
 
 
 }

@@ -1,0 +1,88 @@
+@model Library_Management_System.Models.Book
+
+<style>
+    body { 
+        font-family: Arial,sans-serif;
+        background-color: beige; 
+    }
+
+    .btn {
+            background: linear-gradient(135deg, navy, #d3d3d3, #f5f5dc); /* Gradient button */
+            color: white;
+            padding: 10px;
+            margin-bottom: 1%;
+            border: none;
+            border-radius: 5px;
+            justify-content: center;
+            align-items: center;
+            display: flex;
+            cursor: pointer;
+            text-decoration: none;
+            width: 100%;
+    }
+    .btn:hover {
+        background: linear-gradient(135deg, #003366, #a9a9a9, #e5e5b3); /* Darker on hover */
+    }
+
+    .DeleteModal-Container{
+            overflow-x: hidden;
+            overflow-y: auto;
+            padding:5px;
+            display: flex; 
+            flex-direction: column;
+            justify-content: center;
+            border: 1px solid navy; 
+            border-radius: 10px; 
+            margin: 20px;
+            box-shadow: 0 4px 8px navy; 
+            background-color: #d3d3d3;
+    }
+
+    .modal-content{
+        text-align: center; 
+        justify-content: center;
+
+    }
+</style>
+
+<h2 style=" text-align: center; color: navy; margin: 2%; text-shadow: 2px 2px 4px lightgrey;">Delete Book</h2>
+<div class="DeleteModal-Container">
+<div id="deleteModal" class="modal" style="display: block;">
+    <div class="modal-content"> 
+        <p style="color: navy; text-align: center; justify-content: center;">Are you sure you want to delete "@Model.Title"?</p>
+        <form method="post" action="@Url.Action("DeleteConfirmed", "Books")">
+            <input type="hidden" name="id" value="@Model.Id" />
+            <button type="button" class="btn" onclick="confirmDelete()">Delete</button>
+            <button type="button" class="btn"  onclick="closeModal()">Cancel</button>
+        </form>
+    </div>
+</div>
+</div>
+
+
+
+<script>
+    function openModal(bookId, bookTitle) {
+    document.getElementById("deleteModal").style.display = "block";
+    document.getElementById("modalMessage").innerText = `Are you sure you want to delete "${bookTitle}"?`;
+    document.getElementById("bookId").value = bookId;
+}
+
+function closeModal() {
+    document.getElementById("deleteModal").style.display = "none";
+}
+
+// To close the modal when the user clicks anywhere outside of it
+window.onclick = function(event) {
+    const modal = document.getElementById("deleteModal");
+    if (event.target === modal) {
+        modal.style.display = "none";
+    }
+}
+
+// Confirm deletion function
+function confirmDelete() {
+    document.getElementById("deleteForm").submit();
+}
+
+</script>

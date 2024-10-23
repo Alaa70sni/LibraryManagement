@@ -1,12 +1,70 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "D:\\depi\\Library System\\",
-  "Documents": [],
+  "WorkspaceRootPath": "E:\\Library System\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|E:\\Library System\\Library Management System\\Migrations\\20241023054854_UpdateCheckoutViewModel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:Library Management System\\Migrations\\20241023054854_UpdateCheckoutViewModel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1A7DDFDE-5FD0-4BAC-86EE-F7949F7B4165}|Library Management System\\Library Management System.csproj|e:\\library system\\library management system\\migrations\\20241023024138_updateregisterviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1A7DDFDE-5FD0-4BAC-86EE-F7949F7B4165}|Library Management System\\Library Management System.csproj|solutionrelative:library management system\\migrations\\20241023024138_updateregisterviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1A7DDFDE-5FD0-4BAC-86EE-F7949F7B4165}|Library Management System\\Library Management System.csproj|e:\\library system\\library management system\\migrations\\20241023012515_updatebookmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1A7DDFDE-5FD0-4BAC-86EE-F7949F7B4165}|Library Management System\\Library Management System.csproj|solutionrelative:library management system\\migrations\\20241023012515_updatebookmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
   "DocumentGroupContainers": [
     {
       "Orientation": 0,
       "VerticalTabListWidth": 256,
-      "DocumentGroups": []
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "20241023054854_UpdateCheckoutViewModel.cs",
+              "DocumentMoniker": "E:\\Library System\\Library Management System\\Migrations\\20241023054854_UpdateCheckoutViewModel.cs",
+              "RelativeDocumentMoniker": "Library Management System\\Migrations\\20241023054854_UpdateCheckoutViewModel.cs",
+              "ToolTip": "E:\\Library System\\Library Management System\\Migrations\\20241023054854_UpdateCheckoutViewModel.cs",
+              "RelativeToolTip": "Library Management System\\Migrations\\20241023054854_UpdateCheckoutViewModel.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-23T05:48:55.002Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "20241023024138_UpdateRegisterViewModel.cs",
+              "DocumentMoniker": "E:\\Library System\\Library Management System\\Migrations\\20241023024138_UpdateRegisterViewModel.cs",
+              "RelativeDocumentMoniker": "Library Management System\\Migrations\\20241023024138_UpdateRegisterViewModel.cs",
+              "ToolTip": "E:\\Library System\\Library Management System\\Migrations\\20241023024138_UpdateRegisterViewModel.cs",
+              "RelativeToolTip": "Library Management System\\Migrations\\20241023024138_UpdateRegisterViewModel.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-23T02:41:38.906Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "20241023012515_UpdateBookModel.cs",
+              "DocumentMoniker": "E:\\Library System\\Library Management System\\Migrations\\20241023012515_UpdateBookModel.cs",
+              "RelativeDocumentMoniker": "Library Management System\\Migrations\\20241023012515_UpdateBookModel.cs",
+              "ToolTip": "E:\\Library System\\Library Management System\\Migrations\\20241023012515_UpdateBookModel.cs",
+              "RelativeToolTip": "Library Management System\\Migrations\\20241023012515_UpdateBookModel.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-23T01:25:15.307Z"
+            }
+          ]
+        }
+      ]
     }
   ]
 }

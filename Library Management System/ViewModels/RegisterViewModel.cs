@@ -6,6 +6,7 @@ namespace Library_Management_System.ViewModels
 {
     public class RegisterViewModel
 {
+    public int Id { get; set; } // Add this line
     public string Name { get; set; }
     public DateTime BirthDate { get; set; }
     public string Gender { get; set; }

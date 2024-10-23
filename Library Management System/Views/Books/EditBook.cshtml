@@ -2,14 +2,14 @@
 @using Library_Management_System.ViewModels
 @using Library_Management_System.Models
 
-@model Library_Management_System.ViewModels.EditProfileViewModel
+@model Library_Management_System.ViewModels.EditBookViewModel
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>User Profile</title>
+    <title>Edit Book</title>
     <style>
 
         h2{
@@ -60,52 +60,36 @@
         <button id="toggleBtn" class="open-btn">☰ </button>
     </nav>
 </header>
-        <div id="drawer" class="drawer">
-    <ul>
-        <li><a href="@Url.Action("BookPage", "Books")">🏠 Home</a></li>
-        <li><a href="@Url.Action("Profile", "Account")">👥 Profile</a></li>
-        <li><a href="@Url.Action("Login", "Account")">🚪 Logout</a></li>
-    </ul>
-</div>
 
-
-
-<div id="profileCard" style="display: flex; justify-content: center; margin: 20px;">
+<div id="editBookCard" style="display: flex; justify-content: center; margin: 20px;">
     <div style="border: 1px solid navy; border-radius: 10px; padding: 20px; width: 100%; box-shadow: 0 4px 8px navy; background-color: #d3d3d3; display: flex; flex-direction: column;">
-        <h2 style="text-align: center;">Edit Profile</h2>
-        <form asp-action="EditProfile" method="post">
-    <input type="hidden" asp-for="Id" />
-    <div class="form-group">
-        <label>Name: </label>
-        <input asp-for="Name" />
-    </div>
-    <div class="form-group">
-        <label>Email: </label>
-        <input asp-for="Email" readonly />
-    </div>
-    <div class="form-group">
-        <label>Phone: </label>
-        <input asp-for="Phone" />
-    </div>
-    <div class="form-group">
-        <label>Gender: </label>
-        <input asp-for="Gender" />
-    </div>
-    <div class="form-group">
-        <label>Birth Date: </label>
-        <input asp-for="BirthDate" type="date" />
-    </div>
-    <div class="form-group">
-        <label>Address: </label>
-        <input asp-for="Address" />
-    </div>
-    <button type="submit" class="btn">Save Changes</button>
-</form>
-
+        <h2 style="text-align: center;">Edit Book</h2>
+        <form asp-action="Edit" method="post">
+            <input type="hidden" asp-for="Id" />
+            <div class="form-group">
+                <label>Title:</label>
+                <input asp-for="Title" />
+            </div>
+            <div class="form-group">
+                <label>Author:</label>
+                <input asp-for="Author" />
+            </div>
+            <div class="form-group">
+                <label>Genre:</label>
+                <input asp-for="Genre" />
+            </div>
+            <div class="form-group">
+                <label>Available Copies:</label>
+                <input asp-for="AvailableCopies" type="number" />
+            </div>
+            <div class="form-group">
+                <label>Total Copies:</label>
+                <input asp-for="TotalCopies" type="number" />
+            </div>
+            <button type="submit" class="btn">Save Changes</button>
+        </form>
     </div>
 </div>
-
-
 
 </body>
 </html>

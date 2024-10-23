@@ -15,8 +15,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewData["Title"]</title>
     <style>
-        body { font-family: Arial, sans-serif;background-color: beige; }
-        .filter-menu { position: absolute; background-color: white; }
         .footer { background-color: #4588ca; padding: 10px; text-align: center; }
         .book-item { border: 1px solid #9f967e; margin: 10px; padding: 10px; width: calc(25% - 20px); }
         table { width: 100%; border-collapse: collapse; }
@@ -37,7 +35,7 @@
             background: linear-gradient(135deg, navy, #d3d3d3, #f5f5dc); /* Gradient button */
             color: white;
             padding: 10px;
-            margin-bottom: 10px;
+            margin-bottom: 20px;
             border: none;
             border-radius: 5px;
             cursor: pointer;
@@ -52,7 +50,7 @@
             background: linear-gradient(135deg, navy, #d3d3d3, #f5f5dc); /* Gradient button */
             color: white;
             padding: 10px;
-            margin-bottom: 10px;
+            margin-bottom: 20px;
             border: none;
             border-radius: 5px;
             cursor: pointer;
@@ -67,10 +65,11 @@
             background: linear-gradient(135deg, navy, #d3d3d3, #f5f5dc); /* Gradient button */
             color: white;
             padding: 10px;
+            margin-bottom: 20px;
             border: none;
             border-radius: 5px;
             cursor: pointer;
-            width: 100%;
+
         }
         .btn:hover {
             background: linear-gradient(135deg, #003366, #a9a9a9, #e5e5b3); /* Darker on hover */
@@ -99,54 +98,76 @@
 
 <div id="drawer" class="drawer">
     <ul>
-        <li><a href="@Url.Action("MemberCheckout", "Checkout")">🛒Checkout</a></li>
+        <li>
+            @if (ViewBag.UserRole == "Member")
+            {
+                <a href="@Url.Action("MemberCheckout", "Checkout")">🛒Checkout</a>
+                
+            }
+            else
+            {
+                <a href="@Url.Action("LibrarianCheckout", "Checkout")">🛒Checkout</a>
+            }
+        </li>
         <li><a href="@Url.Action("Profile", "Account")">👥Profile</a></li>
         <li><a href="@Url.Action("Login", "Account")">🚪 Logout</a></li>
-        <li><button onclick="toggleFilterMenu()" style="padding: 5px; background-color: navy; color:beige;">Filter</button></li>
+        <li><button style="width: 100%;" onclick="toggleFilterMenu()" class="btn">Filter</button></li>
     </ul>
 </div>
 
 <div id="filterMenu" class="filter-drawer">
     <ul>
-    <li>
-        
-        <div onclick="toggleSortOptions(event)" style="cursor: pointer;"><strong>Sort by</strong></div>
-        <div id="sortOptions" style="display: none; cursor: pointer; padding-left: 10px;position: absolute; background-color: navy;">
+        <li><button onclick="toggleSortOptions(event)"class="btn"><strong>Sort by</strong></button></li>
+        <li><button onclick="toggleGenreOptions(event)" class="btn"><strong>Genre</strong></button></li>
+        <li><button onclick="toggleAuthorOptions(event)" class="btn"><strong>Author</strong></button></li>
+    </ul>
+</div>
+
+
+<!--Sort Options-->
+
+        <div id="sortOptions" class="sortOptions-drawer">
                    <ul>
             <li onclick="sortBooks('asc')">Ascending</li>
             <li onclick="sortBooks('desc')">Descending</li>
             </ul>
         </div>
-        
-    </li>
-    <li>
-                <div onclick="toggleGenreOptions(event)" style="cursor: pointer;"><strong>Genre</strong></div>
-                    <div id="genreOptions" style="display: none; cursor: pointer; position: absolute; background-color: rgb(149, 136, 104);">
-                    @foreach (var genre in Model.Select(b => b.Genre).Distinct())
-                    {
-                        <div onclick="applyGenre('@genre');">@genre</div>
-                    }
-            </div>
-            </li>
-            <li>
-            <div onclick="toggleAuthorOptions(event)" style="cursor: pointer;"><strong>Author</strong></div>
-            <div id="authorOptions" style="display: none; cursor: pointer; position: absolute; background-color: rgb(149, 136, 104); ">
-                    @foreach (var author in Model.Select(b => b.Author).Distinct())
-                    {
-                        <div onclick="applyAuthor('@author');">@author</div>
-                    }
-            </div>
-        </li>
-</ul>
-</div>
+
+<!-- Genre Options -->
+
+       <div id="genreOptions" class="genreOptions-drawer">
+        <ul>
+                @foreach (var genre in Model.Select(b => b.Genre).Distinct())
+                {
+                    <li onclick="applyGenre('@genre');">@genre</li>
+                }
+        </ul>
+        </div>
+
+
+<!-- Author Options -->
+        <div id="authorOptions" class="authorOptions-drawer">
+            <ul>
+                @foreach (var author in Model.Select(b => b.Author).Distinct())
+                {
+                    <li onclick="applyAuthor('@author');">@author</li>
+                }
+            </ul>
+        </div>
+
+
 
 <!-- Main Content -->
 <div style="padding: 20px;">
     <h2><strong>All Books</strong></h2>
-    <div>
+    <div style="display: flex; justify-content: space-between ; text-align: center; width: 100%;">
         <!-- Toggle View -->
         <button id="cardView" onclick="toggleView('card')">Card View</button>
         <button id="listView"onclick="toggleView('list')">List View</button>
+        @if (ViewBag.UserRole == "Librarian") // Show create book button only for librarians
+        {
+            <a class="btn" asp-action="Create" asp-controller="Books"><strong>+</strong></a>
+        }
     </div>
     
     <div id="bookContainer" style="display: flex; flex-direction: row; flex-wrap: wrap;">
@@ -161,14 +182,24 @@
                     <p>Genre: @book.Genre</p>
                     <p>Available Copies: @book.AvailableCopies</p>
                     <p>Total Copies: @book.TotalCopies</p>
-                      <form asp-action="Add" asp-controller="Checkout" method="post">
+                    @if (ViewBag.UserRole == "Member") // Assuming you have a method to get the current user role
+                    {
+                        <form asp-action="Add" asp-controller="Checkout" method="post">
                             <input type="hidden" name="BookId" value="@book.Id" />
-                            <input type="hidden" name="MemberId" value="@ViewBag.MemberId" /> <!-- Assuming you store member ID in ViewBag -->
-                            <button class = "btn" type="submit" @(book.AvailableCopies == 0 ? "disabled" : "")>
+                            <input type="hidden" name="MemberId" value="@ViewBag.MemberId" />
+                            <button class="btn" type="submit" @(book.AvailableCopies == 0 ? "disabled" : "")>
                                 Add to Checkout
                             </button>
                         </form>
+                    }
 
+                    @if (ViewBag.UserRole == "Librarian")
+                    {
+                        <a class="btn" asp-action="Edit" asp-controller="Books" asp-route-id="@book.Id">Edit</a>
+                        <form asp-action="Delete" asp-controller="Books" asp-route-id="@book.Id" method="post" style="display:inline;">
+                            <button class="btn" type="submit">Delete</button>
+                        </form>
+                        }
                 </div>
             }
         </div>
@@ -195,13 +226,24 @@
                         <td>@book.AvailableCopies</td>
                         <td>@book.TotalCopies</td>
                         <td>
-                               <form asp-action="Add" asp-controller="Checkout" method="post" style="display:inline;">
+                            @if (ViewBag.UserRole == "Member") // Assuming you have a method to get the current user role
+                            {
+                                <form asp-action="Add" asp-controller="Checkout" method="post">
                                     <input type="hidden" name="BookId" value="@book.Id" />
                                     <input type="hidden" name="MemberId" value="@ViewBag.MemberId" />
                                     <button class="btn" type="submit" @(book.AvailableCopies == 0 ? "disabled" : "")>
                                         Add to Checkout
                                     </button>
                                 </form>
+                            }
+
+                            @if (ViewBag.UserRole == "Librarian")
+                            {
+                                <a class="btn" asp-action="Edit" asp-controller="Books" asp-route-id="@book.Id">Edit</a>
+                                <form asp-action="Delete" asp-controller="Books" asp-route-id="@book.Id" method="post" style="display:inline;">
+                                    <button class="btn" type="submit">Delete</button>
+                                </form>
+                            }
 
                         </td>
                     </tr>
@@ -216,52 +258,7 @@
 
 </body>
 </html>
-<!--
-    atif (User.IsInRole("Member"))
-    {
-        <form asp-action="Add" asp-controller="Checkout" method="post" style="display:inline;">
-            <input type="hidden" name="BookId" value="atbook.Id" />
-            <input type="hidden" name="MemberId" value="atViewBag.MemberId" />
-            <button type="submit" at(book.AvailableCopies == 0 ? "disabled" : "")>
-                Add to Checkout
-            </button>
-        </form>
-    }
-    else if (User.IsInRole("Librarian"))
-    {
-        <a href="/Books/Edit/atbook.Id">Edit</a> 
-        <a href="/Books/Delete/atbook.Id">Delete</a>
-    }
-               
-               
-               
-            
 
-
-
-                    atif (User.IsInRole("Member"))
-    {
-        <form asp-action="Add" asp-controller="Checkout" method="post">
-            <input type="hidden" name="BookId" value="atbook.Id" />
-            <input type="hidden" name="MemberId" value="atViewBag.MemberId" /> 
-            <button type="submit" at(book.AvailableCopies == 0 ? "disabled" : "")>
-                Add to Checkout
-            </button>
-        </form>
-    }
-    else if (User.IsInRole("Librarian"))
-    {
-        <a href="/Books/Edit/atbook.Id">Edit</a> 
-        <a href="/Books/Delete/atbook.Id">Delete</a>
-    } 
-
-
-
-               
-               
-               
-               
-                            -->
 
 
 
