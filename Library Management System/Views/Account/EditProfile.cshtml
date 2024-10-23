@@ -1,0 +1,120 @@
+@using Library_Management_System.Controllers
+@using Library_Management_System.ViewModels
+@using Library_Management_System.Models
+
+@model Library_Management_System.ViewModels.RegisterViewModel
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Profile</title>
+    <style>
+        body { font-family: Arial, sans-serif;background-color: beige; }
+
+        h2{
+            text-align: center;
+            color: navy; /* Navy text color */
+            margin: 15px;
+            text-shadow: 2px 2px 4px lightgrey;
+        }
+
+        label{margin: 2%; color: navy; text-shadow: 2px 2px 4px lightgrey;}
+
+     .btn {
+            background: linear-gradient(135deg, navy, #d3d3d3, #f5f5dc); /* Gradient button */
+            color: white;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+            margin: 10%;
+        }
+        .btn:hover {
+            background: linear-gradient(135deg, #003366, #a9a9a9, #e5e5b3); /* Darker on hover */
+            color: navy;
+        }
+
+
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 10px;
+            background-color: beige; /* Beige background for input fields */
+            border: 2px solid beige; /* Navy border */
+            border-radius: 5px;
+            color: navy;
+        }
+        .form-group input:focus, .form-group select:focus {
+            border-color: navy; /* Navy border when focused */
+            outline: none; /* Remove default outline */
+        }
+
+
+
+
+
+
+
+
+    </style>
+</head>
+<body>
+
+<header>
+    <nav style="display: flex; justify-content: space-between; align-items: center; padding: 10px;">
+        <div style="font-size: 1.5rem; color: beige;">📚 Our Library </div>
+        <button id="toggleBtn" class="open-btn">☰ </button>
+    </nav>
+</header>
+        <div id="drawer" class="drawer">
+    <ul>
+        <li><a href="@Url.Action("BookPage", "Books")">🏠 Home</a></li>
+        <li><a href="@Url.Action("Login", "Account")">🚪 Logout</a></li>
+    </ul>
+</div>
+
+
+
+<div id="profileCard" style="display: flex; justify-content: center; margin: 20px;">
+    <div style="border: 1px solid navy; border-radius: 10px; padding: 20px; width: 100%; box-shadow: 0 4px 8px navy; background-color: #d3d3d3; display: flex; flex-direction: column;">
+        <h2 style="text-align: center;">Edit Profile</h2>
+        <form asp-action="EditProfile" method="post">
+            <div class="form-group">
+                <label>Name : </label>
+                <input asp-for="Name" />
+            </div>
+            <div class="form-group">
+                <label>Email : </label>
+                <input asp-for="Email" readonly />
+            </div>
+            <div class="form-group">
+                <label>Phone : </label>
+                <input asp-for="Phone" />
+            </div>
+            <div class="form-group">
+                <label>Gender : </label>
+                <input asp-for="Gender" />
+            </div>
+            <div class="form-group">
+                <label>Birth Date : </label>
+                <input asp-for="BirthDate" type="date" />
+            </div>
+            <div class="form-group">
+                <label>Address : </label>
+                <input asp-for="Address" />
+            </div>
+            <button type="submit" class="btn">Save Changes</button>
+        </form>
+
+    </div>
+</div>
+
+
+
+</body>
+</html>

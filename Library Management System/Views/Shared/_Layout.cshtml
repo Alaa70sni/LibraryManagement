@@ -1,0 +1,53 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using Library_Management_System.Controllers
+@using Library_Management_System.ViewModels
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Library_Management_System</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/Library_Management_System.styles.css" asp-append-version="true" />
+    <style>
+        /* Navbar styles */
+        .navbar {
+            background-color: navy;
+        }
+        .navbar-brand {
+            color: white;
+        }
+        .navbar-nav .nav-link {
+            color: white;
+        }
+        .navbar-nav .nav-link:hover {
+            color: #ccc;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div >
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer>
+        <p style="margin: 10px; colour:beige;">&copy; @DateTime.Now.Year Library Management System</p>
+        <div style="margin: 10px; "><a href="@Url.Action("About", "Books")" class="text-white" style =" colour:beige;">📖 About Us</a></div>
+    </footer>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>
+
+
